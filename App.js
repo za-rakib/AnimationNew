@@ -1,18 +1,25 @@
-/* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
-import {
-  Text,
-  SafeAreaView,
-  View,
-  TouchableOpacity,
-  Animated,
-} from 'react-native';
-import React from 'react';
-import {useSharedValue} from 'react-native-reanimated';
+/* eslint-disable react/self-closing-comp */
+import React, {useEffect, useState} from 'react';
+import {Text, SafeAreaView, View, TouchableOpacity} from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming,
+} from 'react-native-reanimated';
 
 const App = () => {
   const animation = useSharedValue(0);
-  console.log({animation});
+  const [clicked, setClicked] = useState(false);
+  const animatedStyle = useAnimatedStyle(() => {
+    return {transform: [{rotate: `${animation.value}deg`}]};
+  });
+
+  // useEffect(() => {
+  //   console.log({animation});
+  // }, [animation]);
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <Text
@@ -27,11 +34,26 @@ const App = () => {
       </Text>
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Animated.View
-          style={{
-            height: 100,
-            width: 100,
-            backgroundColor: '#ee3333',
-          }}></Animated.View>
+          style={[
+            {
+              height: 150,
+              width: 150,
+              backgroundColor: '#ee3333',
+              borderRadius: 30,
+              justifyContent: 'center',
+              alignItems: 'center',
+            },
+            animatedStyle,
+          ]}>
+          <View
+            style={{
+              height: 50,
+              width: 50,
+              backgroundColor: '#fff',
+              borderRadius: 25,
+              borderColor: '#000',
+            }}></View>
+        </Animated.View>
         <TouchableOpacity
           style={{
             borderWidth: 2,
@@ -41,7 +63,14 @@ const App = () => {
             alignItems: 'center',
             marginTop: 20,
           }}
-          onPress={() => console.log('jasdfhgh')}>
+          onPress={() => {
+            if (clicked) {
+              animation.value = withTiming(360, {duration: 300});
+            } else {
+              animation.value = withTiming(0, {duration: 500});
+            }
+            setClicked(!clicked);
+          }}>
           <Text>Start</Text>
         </TouchableOpacity>
       </View>
@@ -50,41 +79,3 @@ const App = () => {
 };
 
 export default App;
-
-// import React, {useState} from 'react';
-// import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-
-// const App = () => {
-//   const [count, setCount] = useState(0);
-//   const onPress = () => setCount(prevCount => prevCount + 1);
-
-//   return (
-//     <View style={styles.container}>
-//       <View style={styles.countContainer}>
-//         <Text>Count: {count}</Text>
-//       </View>
-//       <TouchableOpacity style={styles.button} onPress={onPress}>
-//         <Text>Press Here</Text>
-//       </TouchableOpacity>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     paddingHorizontal: 10,
-//   },
-//   button: {
-//     alignItems: 'center',
-//     backgroundColor: '#DDDDDD',
-//     padding: 10,
-//   },
-//   countContainer: {
-//     alignItems: 'center',
-//     padding: 10,
-//   },
-// });
-
-// export default App;
