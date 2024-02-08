@@ -1,112 +1,90 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React from 'react';
-import type {Node} from 'react';
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react-native/no-inline-styles */
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
   Text,
-  useColorScheme,
+  SafeAreaView,
   View,
+  TouchableOpacity,
+  Animated,
 } from 'react-native';
+import React from 'react';
+import {useSharedValue} from 'react-native-reanimated';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+const App = () => {
+  const animation = useSharedValue(0);
+  console.log({animation});
   return (
-    <View style={styles.sectionContainer}>
+    <SafeAreaView style={{flex: 1}}>
       <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
+        style={{
+          color: 'red',
+          fontSize: 30,
+          marginTop: 20,
+          fontWeight: 'bold',
+          textAlign: 'center',
+        }}>
+        Animation
       </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
-
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Animated.View
           style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+            height: 100,
+            width: 100,
+            backgroundColor: '#ee3333',
+          }}></Animated.View>
+        <TouchableOpacity
+          style={{
+            borderWidth: 2,
+            height: 50,
+            width: 150,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 20,
+          }}
+          onPress={() => console.log('jasdfhgh')}>
+          <Text>Start</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
 export default App;
+
+// import React, {useState} from 'react';
+// import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+
+// const App = () => {
+//   const [count, setCount] = useState(0);
+//   const onPress = () => setCount(prevCount => prevCount + 1);
+
+//   return (
+//     <View style={styles.container}>
+//       <View style={styles.countContainer}>
+//         <Text>Count: {count}</Text>
+//       </View>
+//       <TouchableOpacity style={styles.button} onPress={onPress}>
+//         <Text>Press Here</Text>
+//       </TouchableOpacity>
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     paddingHorizontal: 10,
+//   },
+//   button: {
+//     alignItems: 'center',
+//     backgroundColor: '#DDDDDD',
+//     padding: 10,
+//   },
+//   countContainer: {
+//     alignItems: 'center',
+//     padding: 10,
+//   },
+// });
+
+// export default App;
