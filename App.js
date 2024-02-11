@@ -3,6 +3,8 @@
 import React, {useEffect, useState} from 'react';
 import {Text, SafeAreaView, View, TouchableOpacity} from 'react-native';
 import Animated, {
+  interpolate,
+  interpolateColor,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
@@ -10,12 +12,35 @@ import Animated, {
 } from 'react-native-reanimated';
 
 const App = () => {
-  const animation = useSharedValue(0);
+  const animation = useSharedValue(1);
   const [clicked, setClicked] = useState(false);
   const animatedStyle = useAnimatedStyle(() => {
-    return {transform: [{rotate: `${animation.value}deg`}]};
+    const width = interpolate(animation.value, [1, 0], [200, 200]);
+    const height = interpolate(animation.value, [1, 0], [100, 100]);
+    //  const borderRadius = interpolate(animation.value, [1, 0], [0, 100]);
+    const backgroundColor = interpolateColor(
+      animation.value,
+      [1, 0],
+      ['green', '#007CC2'],
+    );
+    //  console.log({width});
+    return {
+      width: width,
+      height: height,
+      backgroundColor,
+      // borderRadius,
+    };
   });
-
+  const circleStyle = useAnimatedStyle(() => {
+    const backgroundColor = interpolateColor(
+      animation.value,
+      [1, 0],
+      ['red', '#FFCC00'],
+    );
+    return {
+      backgroundColor,
+    };
+  });
   // useEffect(() => {
   //   console.log({animation});
   // }, [animation]);
@@ -36,23 +61,25 @@ const App = () => {
         <Animated.View
           style={[
             {
-              height: 150,
+              height: 50,
               width: 150,
               backgroundColor: '#ee3333',
-              borderRadius: 30,
               justifyContent: 'center',
               alignItems: 'center',
             },
             animatedStyle,
           ]}>
-          <View
-            style={{
-              height: 50,
-              width: 50,
-              backgroundColor: '#fff',
-              borderRadius: 25,
-              borderColor: '#000',
-            }}></View>
+          <Animated.View
+            style={[
+              {
+                height: 60,
+                width: 60,
+                backgroundColor: '#fff',
+                borderRadius: 30,
+                borderColor: '#000',
+              },
+              circleStyle,
+            ]}></Animated.View>
         </Animated.View>
         <TouchableOpacity
           style={{
@@ -64,8 +91,9 @@ const App = () => {
             marginTop: 20,
           }}
           onPress={() => {
+            // animation.value = 0;
             if (clicked) {
-              animation.value = withTiming(360, {duration: 300});
+              animation.value = withTiming(1, {duration: 500});
             } else {
               animation.value = withTiming(0, {duration: 500});
             }
