@@ -34,7 +34,7 @@ const GestureHandler2 = () => {
       isPressed.value = true;
     })
     .onUpdate(e => {
-      // console.log({e});
+      console.log({e});
       // offset.value.x = e.translationX + start.value.x;
       // offset.value.y = e.translationY + start.value.y;
       offset.value = {
@@ -43,8 +43,10 @@ const GestureHandler2 = () => {
       };
     })
     .onEnd(() => {
-      start.value.x = offset.value.x;
-      start.value.y = offset.value.y;
+      // start.value.x = offset.value.x;
+      // start.value.y = offset.value.y;
+      offset.value.x = 0;
+      offset.value.y = 0;
       // isPressed.value = false;
     })
     .onFinalize(() => {
@@ -61,8 +63,8 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     backgroundColor: 'red',
-    alignSelf: 'center',
-    marginTop: 20,
+    // alignSelf: 'center',
+    margin: 20,
   },
 });
 export default GestureHandler2;
