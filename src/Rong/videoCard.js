@@ -1,7 +1,12 @@
 import React from 'react';
-import {View, StyleSheet, Text, Dimensions, Image, TouchableOpacity} from 'react-native';
-
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 
 const SIZES = Dimensions.get('window');
 

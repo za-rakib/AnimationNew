@@ -3,6 +3,8 @@ import {View, Text, SafeAreaView} from 'react-native';
 import React, {useState} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import VideoCard from './videoCard';
+import Header from './Header';
+import Tabs from './Tabs';
 const list = [
   {
     channelLogo:
@@ -47,6 +49,8 @@ const Rong = () => {
   return (
     <>
       <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+        <Header />
+        <Tabs />
         <ScrollView>
           {list.map((item, index) => (
             <VideoCard
