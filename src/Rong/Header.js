@@ -6,12 +6,18 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 export default function Header() {
   return (
     <View style={styles.row}>
-      <Image
+      {/* <Image
         style={styles.logo}
         source={{
           uri: 'https://cdn.mos.cms.futurecdn.net/8gzcr6RpGStvZFA2qRt4v6.jpg',
         }}
-      />
+      /> */}
+      <View style={styles.logo}>
+        <Image
+          style={styles.logoImage}
+          source={require('../assets/Rong.png')}
+        />
+      </View>
       <View style={[styles.row, {width: '30%', marginRight: 10}]}>
         <Feather name="cast" size={25} color="black" />
         <Ionicons name="notifications-outline" size={25} color="black" />
@@ -22,7 +28,18 @@ export default function Header() {
 }
 
 const styles = StyleSheet.create({
-  logo: {width: 150, height: 90, resizeMode: 'contain'},
+  logo: {
+    height: 50,
+    marginTop: 5,
+    marginBottom: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logoImage: {
+    width: 80,
+    height: 50,
+    resizeMode: 'contain',
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',

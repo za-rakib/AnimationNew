@@ -5,6 +5,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import VideoCard from './videoCard';
 import Header from './Header';
 import Tabs from './Tabs';
+import RongPlayer from './RongPlayer2';
 const list = [
   {
     channelLogo:
@@ -47,21 +48,25 @@ const Rong = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   return (
-    <>
-      <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-        <Header />
-        <Tabs />
-        <ScrollView>
-          {list.map((item, index) => (
-            <VideoCard
-              key={index}
-              data={item}
-              setSelectedVideo={setSelectedVideo}
-            />
-          ))}
-        </ScrollView>
-      </SafeAreaView>
-    </>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+      <Header />
+      <Tabs />
+      <ScrollView>
+        {list.map((item, index) => (
+          <VideoCard
+            key={index}
+            data={item}
+            setSelectedVideo={setSelectedVideo}
+          />
+        ))}
+      </ScrollView>
+      {selectedVideo && (
+        <RongPlayer
+          selectedVideo={selectedVideo}
+          onClose={() => setSelectedVideo(null)}
+        />
+      )}
+    </SafeAreaView>
   );
 };
 
