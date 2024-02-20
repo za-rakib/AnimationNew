@@ -22,6 +22,7 @@ const GestureHandler = () => {
       backgroundColor: isPressed.value ? 'yellow' : 'blue',
     };
   });
+
   const gesture = Gesture.Pan()
     .onBegin(() => {
       isPressed.value = true;

@@ -39,9 +39,7 @@ let bottomTranslateY = (screenHeight * 95) / 100 - IMAGE_WIDTH_COL - 20;
 const RongPlayer = ({onClose, selectedVideo}) => {
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
-  const isPressed = useSharedValue(false);
-  const offset = useSharedValue({x: 0, y: 0});
-  const start = useSharedValue({x: 0, y: 0});
+  const isInitialBottom = useSharedValue(0);
   useEffect(() => {
     translateY.value = withTiming(0, {duration: 300});
   }, []);
@@ -53,59 +51,25 @@ const RongPlayer = ({onClose, selectedVideo}) => {
   }, [selectedVideo]);
 
   const gesture = Gesture.Pan()
-    .onStart(() => {
-      // Flag the start of the gesture
-      isPressed.value = true;
-      // Store the initial position for tracking
-      start.value = {x: translateX.value, y: translateY.value};
+    .onBegin(() => {
+      isInitialBottom.value = translateY.value;
+      // setIsInitialBottom(translateY.value === bottomTranslateY);
     })
-    .onUpdate(e => {
-      // Log the event details for debugging (optional)
-      console.log({e});
-      // Calculate the offset based on the current event and initial position
-      offset.value = {
-        x: e.translationX + start.value.x,
-        y: e.translationY + start.value.y,
-      };
-      // Update the translateY value directly for animation (adjust as needed)
-      translateY.value = offset.value.y;
+    .onUpdate(({translationY, translationX}) => {
+      // Update translateY and translateX values smoothly
+      translateY.value = translateY.value + translationY;
+      translateX.value = translateX.value + translationX;
     })
     .onEnd(() => {
-      // Update the starting position based on the final offset
-      start.value = {x: offset.value.x, y: offset.value.y};
-      // Determine the end position based on specific logic
       const endPosition =
-        offset.value.y > bottomTranslateY - 80
-          ? 0
-          : offset.value.y > 100
-          ? bottomTranslateY
-          : 0;
-      // Animate the transition to the end position
-      translateY.value = withTiming(endPosition, {duration: 300});
-    })
-    .onFinalize(() => {
-      // Reset the pressed flag after gesture completes
-      isPressed.value = false;
-    });
-  // .onBegin(() => {
-  //   isInitialBottom.value = translateY.value;
-  //   // setIsInitialBottom(translateY.value === bottomTranslateY);
-  // })
-  // .onUpdate(({translationY, translationX}) => {
-  //   // Update translateY and translateX values smoothly
-  //   translateY.value = translateY.value + translationY;
-  //   translateX.value = translateX.value + translationX;
-  // })
-  // .onEnd(() => {
-  //   const endPosition =
-  //     isInitialBottom && translateY.value > bottomTranslateY - 80
-  //       ? 0 // Full swipe from bottom, snap to top
-  //       : translateY.value > 100
-  //       ? bottomTranslateY // Partial swipe beyond threshold, snap to bottom
-  //       : 0; // Short swipe or cancel, snap to top
+        isInitialBottom && translateY.value > bottomTranslateY - 80
+          ? 0 // Full swipe from bottom, snap to top
+          : translateY.value > 100
+          ? bottomTranslateY // Partial swipe beyond threshold, snap to bottom
+          : 0; // Short swipe or cancel, snap to top
 
-  //   translateY.value = withTiming(endPosition, {duration: 300});
-  // });
+      translateY.value = withTiming(endPosition, {duration: 300});
+    });
   // .onBegin(e => {
   //   console.log({bg: e});
   // })

@@ -30,6 +30,7 @@ const SIZES = Dimensions.get('window');
 
 // IMAGE SIZES
 const IMAGE_TOP_DISTANCE = 100;
+const screenWidth = Dimensions.get('screen').width;
 const IMAGE_BOTTOM_DISTANCE = SIZES.width / 1.2;
 const BIG_IMAGE_SIZE = SIZES.height / 3.2;
 
@@ -39,7 +40,21 @@ const IMAGE_WIDTH_COL = (SIZES.width * 33) / 100;
 const screenHeight = Dimensions.get('screen').height;
 let bottomTranslateY = (screenHeight * 95) / 100 - IMAGE_WIDTH_COL - 20;
 
+// console.log({
+//   IMAGE_BOTTOM_DISTANCE: IMAGE_BOTTOM_DISTANCE,
+//   BIG_IMAGE_SIZE: BIG_IMAGE_SIZE,
+//   IMAGE_WIDTH_COL: IMAGE_WIDTH_COL,
+//   bottomTranslateY: bottomTranslateY,
+// });
 const RongPlayer = ({onClose, selectedVideo, bottomPosition}) => {
+  console.log({
+    IMAGE_BOTTOM_DISTANCE: IMAGE_BOTTOM_DISTANCE,
+    BIG_IMAGE_SIZE: BIG_IMAGE_SIZE,
+    screenWidth: screenWidth,
+    IMAGE_WIDTH_COL: IMAGE_WIDTH_COL,
+    bottomTranslateY: bottomTranslateY,
+    screenHeight: screenHeight,
+  });
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(300);
 
@@ -139,14 +154,14 @@ const RongPlayer = ({onClose, selectedVideo, bottomPosition}) => {
 
   const expandPlayer = () => {
     if (translateY.value > 100) {
-      translateY.value = withTiming(0, {duration: 300});
+      translateY.value = withTiming(0, {duration: 400});
     }
   };
 
   return (
     <Animated.View style={[translateStyle, styles.wrapper]}>
       {/* PLAYER Section */}
-      {/* <View style={styles.playerContainer}>
+      <View style={styles.playerContainer}>
         <PanGestureHandler onGestureEvent={gestureHandler}>
           <Animated.View>
             <TouchableWithoutFeedback
@@ -188,11 +203,11 @@ const RongPlayer = ({onClose, selectedVideo, bottomPosition}) => {
             <Icon name="close" size={30} color="black" />
           </TouchableOpacity>
         </View>
-      </View> */}
+      </View>
 
-      {/* <Animated.View style={[detailsStyle, styles.container]}>
+      <Animated.View style={[detailsStyle, styles.container]}>
         <Text style={styles.title}>{selectedVideo?.title}</Text>
-  
+
         <View style={styles.iconsContainer}>
           <Icon name="like2" size={30} color="black" />
           <Icon name="dislike2" size={30} color="black" />
@@ -234,7 +249,7 @@ const RongPlayer = ({onClose, selectedVideo, bottomPosition}) => {
             channelTitle: 'Ryan Shirley   150k views  3 months ago',
           }}
         />
-      </Animated.View> */}
+      </Animated.View>
     </Animated.View>
   );
 };

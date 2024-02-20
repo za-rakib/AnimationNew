@@ -5,7 +5,8 @@ import {ScrollView} from 'react-native-gesture-handler';
 import VideoCard from './videoCard';
 import Header from './Header';
 import Tabs from './Tabs';
-import RongPlayer from './RongPlayer2';
+import RongPlayer from './RongPlayer';
+import RongPlayer2 from './RongPlayer2';
 const list = [
   {
     channelLogo:
